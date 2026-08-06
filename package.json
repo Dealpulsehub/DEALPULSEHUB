@@ -1,0 +1,11 @@
+{
+  "name": "dealpulsehub",
+  "version": "1.0.0",
+  "description": "Phase 4 Design System - Storybook Deployment",
+  "scripts": {
+    "build-storybook": "echo 'Storybook build placeholder'",
+    "dev": "echo 'Development mode'"
+  },
+  "author": "Oscar Delgado",
+  "license": "MIT"
+}
