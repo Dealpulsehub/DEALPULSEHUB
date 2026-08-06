@@ -1,0 +1,83 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables (SENSITIVE)
+.env
+.env.local
+.env.*.local
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.DS_Store
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Storybook
+storybook-static/
+.storybook/node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Claude Code / AIOX Internal (NEVER commit)
+.ai/
+.aiox-core/
+.claude/
+.knowledge-ingestion/
+.n8n/
+.playwright-mcp/
+
+# Google credentials (SENSITIVE - NEVER commit)
+.google-service-account.json
+
+# Temp/Generated files
+_archive/
+DEALPULSEHUB-CLEAN/
+DESIGN_SYSTEM_PREVIEW.html
+EXECUTIVE-SUMMARY-*.txt
+FINAL-STEP-*.txt
+HANDOFF.md
+PHASE1_DELIVERABLES.txt
+PROYECTO_REORGANIZACION_COMPLETO.md
+REORGANIZACION_RAPIDA.md
+REORGANIZACION_SUMARIO.json
+WEEK*.md
+_reorganize.ps1
+create-cco-task.ps1
+create_cco_task.py
+debug-storybook.log
+design-system-preview.html
+graphify-out/
+jest.config.js
+kit-del-heredero/
+landing/
+nul
+obsidian-vault/
+phase4-*.html
+pr_body.txt
+reel1-instagram.jpeg
+v1-preview.jpeg
+video-editor/
+vsl-heredero-financiero/

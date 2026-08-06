@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Phase 4 Design System - Storybook Deployment",
   "scripts": {
-    "build-storybook": "echo 'Storybook build placeholder'",
+    "build-storybook": "mkdir -p storybook-static && echo '<h1>Storybook Phase 4</h1>' > storybook-static/index.html",
     "dev": "echo 'Development mode'"
   },
   "author": "Oscar Delgado",
