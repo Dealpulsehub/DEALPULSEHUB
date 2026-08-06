@@ -1,3 +1,5 @@
+# Storybook Deployment Workflow
+# Automatically builds and deploys Storybook to GitHub Pages
 name: Deploy Storybook
 
 on:
