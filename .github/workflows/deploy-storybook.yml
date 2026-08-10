@@ -42,13 +42,19 @@ jobs:
 
       - name: Copy built files to gh-pages
         run: |
+          # Guardar el build recién generado (paso "Build Storybook") fuera del
+          # working tree ANTES de limpiar — storybook-static/ nunca está
+          # trackeado en git (ver .gitignore), así que no se puede recuperar
+          # con `git checkout` tras borrarlo.
+          mkdir -p /tmp/storybook-build
+          cp -r storybook-static/. /tmp/storybook-build/
+
           # Clear existing files (except .git)
           find . -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
 
-          # Copy storybook-static files from main branch
-          git checkout main -- storybook-static/
-          cp -r storybook-static/* .
-          rm -rf storybook-static/
+          # Restaurar el build
+          cp -r /tmp/storybook-build/. .
+          rm -rf /tmp/storybook-build
 
           # Create .nojekyll to skip Jekyll processing
           touch .nojekyll
