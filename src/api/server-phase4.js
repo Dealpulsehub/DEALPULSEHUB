@@ -423,8 +423,8 @@ app.post('/api/v4/workflow/execute', (req, res) => {
       clientId
     };
 
-    orchestrator.enqueueTask(task);
-    const taskId = task.id;
+    const enqueuedTask = orchestrator.enqueueTask(task);
+    const taskId = enqueuedTask.id;
     workflow.phases.orchestration = {
       status: 'completed',
       taskId: taskId,
@@ -449,7 +449,7 @@ app.post('/api/v4/workflow/execute', (req, res) => {
       recommendations: 5
     };
 
-    const validation = qualityGate.validateOutput(taskType, mockOutput);
+    const validation = qualityGate.validateOutput(taskId, taskType, mockOutput);
     workflow.phases.validation = {
       status: 'completed',
       verdict: validation.verdict,
@@ -558,13 +558,13 @@ app.post('/api/v4/workflow/demo', (req, res) => {
   try {
     // ORQUESTACIÓN
     const task = { type: 'audit', priority: 'high', description: 'Demo audit' };
-    orchestrator.enqueueTask(task);
-    const taskId = task.id;
+    const enqueuedTask = orchestrator.enqueueTask(task);
+    const taskId = enqueuedTask.id;
     orchestrator.assignTask(taskId);
     demoOutput.phases.orchestration = 'completed';
 
     // VALIDACIÓN
-    const validation = qualityGate.validateOutput('audit', {
+    const validation = qualityGate.validateOutput(taskId, 'audit', {
       score: 87,
       completeness: 0.9,
       frameworks: 5,

@@ -286,7 +286,7 @@ async function runTests() {
     console.log('📋 TEST 14: System Status General');
     const status = await makeRequest('GET', '/api/v4/status');
     console.log('✅ Estado del sistema:');
-    console.log('   Tareas (Orchestrator):', status.data.orchestrator.stats.total);
+    console.log('   Tareas (Orchestrator):', status.data.orchestrator.summary.total);
     console.log('   KPIs (Metrics):');
     console.log('     - Success Rate:', (status.data.metrics.tasks.successRate * 100).toFixed(1) + '%');
     console.log('     - Approval Rate:', (status.data.metrics.validations.approvalRate * 100).toFixed(1) + '%');
