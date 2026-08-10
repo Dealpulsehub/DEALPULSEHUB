@@ -200,7 +200,7 @@ app.get('/api/v1/tasks', (req: Request, res: Response) => {
 });
 
 app.get('/api/v1/tasks/:id', (req: Request, res: Response) => {
-  const task = taskQueue.get(req.params.id);
+  const task = taskQueue.get(req.params.id as string);
 
   if (!task) {
     return res.status(404).json({
@@ -212,7 +212,7 @@ app.get('/api/v1/tasks/:id', (req: Request, res: Response) => {
 });
 
 app.post('/api/v1/tasks/:id/run', (req: Request, res: Response) => {
-  const task = taskQueue.get(req.params.id);
+  const task = taskQueue.get(req.params.id as string);
 
   if (!task) {
     return res.status(404).json({ error: 'Task not found' });
@@ -236,7 +236,7 @@ app.post('/api/v1/tasks/:id/run', (req: Request, res: Response) => {
 });
 
 app.post('/api/v1/tasks/:id/complete', (req: Request, res: Response) => {
-  const task = taskQueue.get(req.params.id);
+  const task = taskQueue.get(req.params.id as string);
   const { result } = req.body;
 
   if (!task) {
