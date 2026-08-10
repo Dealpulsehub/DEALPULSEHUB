@@ -1,0 +1,29 @@
+{
+  "figmaProjectId": "rK9jTbeesYwkjyJeI02Rsq",
+  "figmaFile": "Dealpulsehub",
+  "figmaToken": "SET_VIA_ENV_FIGMA_TOKEN",
+  "outputPath": "./src/tokens/",
+  "modes": {
+    "light": "Light Mode",
+    "dark": "Dark Mode"
+  },
+  "autoSync": true,
+  "syncInterval": 3600,
+  "syncOnStartup": true,
+  "figmaTokens": {
+    "colors": "Colors",
+    "typography": "Typography",
+    "spacing": "Spacing",
+    "shadows": "Shadows"
+  },
+  "outputFormats": [
+    "json",
+    "css",
+    "typescript"
+  ],
+  "gitConfig": {
+    "autoCommit": true,
+    "commitMessage": "chore: sync Figma tokens to design system",
+    "branch": "figma-sync"
+  }
+}

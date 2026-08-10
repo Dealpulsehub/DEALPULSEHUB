@@ -1,0 +1,23 @@
+﻿# Documentación (README.md y CHANGELOG.md SÍ se incluyen — npm los usa para la página del paquete)
+docs/
+
+# Ejemplos y demos
+demo.html
+.storybook/
+
+# Scripts
+scripts/
+
+# Config
+figma-config.json
+.github/
+
+# Development
+node_modules/
+.git/
+.gitignore
+*.log
+.DS_Store
+
+# Source
+src/components/*.stories.tsx

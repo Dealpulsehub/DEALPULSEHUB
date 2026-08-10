@@ -1,0 +1,65 @@
+/* Base Styles */
+
+/* Typography */
+h1 {
+  font-size: var(--fontSize-3xl);
+}
+
+h2 {
+  font-size: var(--fontSize-2xl);
+}
+
+h3 {
+  font-size: var(--fontSize-xl);
+}
+
+h4, h5, h6 {
+  font-size: var(--fontSize-lg);
+}
+
+p {
+  line-height: var(--lineHeight-normal);
+}
+
+/* Links */
+a {
+  outline: none;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Focus states */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Transitions */
+button,
+input,
+textarea,
+select,
+a {
+  transition: all 0.2s ease;
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

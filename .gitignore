@@ -1,12 +1,14 @@
 # Dependencies
 node_modules/
-package-lock.json
 yarn.lock
+# package-lock.json se trackea a propósito: los workflows de CI usan `npm ci`,
+# que requiere un lockfile exacto y commiteado para ser reproducible.
 
 # Environment variables (SENSITIVE)
 .env
 .env.local
 .env.*.local
+.npmrc
 
 # IDE & Editor
 .vscode/
@@ -52,6 +54,9 @@ Thumbs.db
 # Google credentials (SENSITIVE - NEVER commit)
 .google-service-account.json
 
+# Encryption vault (SENSITIVE - master key + encrypted credentials)
+.vault/
+
 # Temp/Generated files
 _archive/
 DEALPULSEHUB-CLEAN/
@@ -70,7 +75,6 @@ create_cco_task.py
 debug-storybook.log
 design-system-preview.html
 graphify-out/
-jest.config.js
 kit-del-heredero/
 landing/
 nul
