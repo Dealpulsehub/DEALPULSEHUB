@@ -115,8 +115,8 @@
     "typescript-eslint": "^8.66.0"
   },
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
+    "node": ">=20.6.0",
+    "npm": ">=9.0.0"
   },
   "publishConfig": {
     "access": "public",
