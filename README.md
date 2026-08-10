@@ -4,7 +4,7 @@ Repositorio con **4 sistemas relacionados**: un Design System React publicable, 
 de orquestación multi-agente ("Sistema Antigravity"), integración de producción de mockups
 vía Penpot MCP, y la metodología divisional que gobierna cómo se decide el trabajo.
 
-> 🗺️ **Mapa completo de los 4 sistemas:** [`.claude/rules/ARCHITECTURE_MAP.md`](.claude/rules/ARCHITECTURE_MAP.md)
+> 🗺️ **Mapa completo de los 4 sistemas:** [`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md)
 > — léelo primero si vas a trabajar en este repo por primera vez.
 
 ---
@@ -21,7 +21,7 @@ Sistema de diseño moderno, type-safe, con tokens automatizados. Construido con 
 - ✅ **Auto-generated** — Tokens TypeScript + CSS automáticos
 - ✅ **Figma Sync** — Sincronización automática cada hora
 - ✅ **33 tests automatizados** (Jest + Testing Library)
-- ⚠️ **Aún no publicado a npm** pese al `publishConfig` en `package.json` (pendiente decisión)
+- ✅ **Publicado en npm** como [`@dealpulsehub/design-system`](https://www.npmjs.com/package/@dealpulsehub/design-system)
 
 ### 🚀 Quick Start
 
@@ -95,14 +95,14 @@ Backend interno (`src/orchestration/`, `src/quality/`, `src/security/`, `src/cli
 valida calidad, audita decisiones y gestiona clientes/proyectos.
 
 ```bash
-npm run dev:api        # API Fase 1 (task queue simple) — dev, vía ts-node
-npm run api             # API Fase 1 — producción, requiere `npm run build` antes
-npm run api:phase4      # API Fase 4 COMPLETA — 40+ endpoints (bridge/security/clients/workflow)
+npm run api             # API oficial (Fase 4 completa) — 40+ endpoints (bridge/security/clients/workflow)
+npm run dev:api         # Igual que arriba (alias para desarrollo)
+npm run api:legacy-v1   # Prototipo Fase 1 (task queue simple, sin Antigravity) — solo referencia
 npm run demo:phase4     # Demo del workflow end-to-end (console.log, no es un test)
 ```
 
 Detalle completo, incluyendo qué endpoints expone cada fase y un bug conocido pendiente
-de arreglar en el workflow end-to-end: ver `.claude/rules/ARCHITECTURE_MAP.md` sección 2.
+de arreglar en el workflow end-to-end: ver `docs/ARCHITECTURE_MAP.md` sección 2.
 
 ---
 
@@ -137,7 +137,7 @@ DealPulseHub/
 │   ├── tokens/               # tokens.json (fuente) → tokens.ts / tokens.css (generados)
 │   ├── styles/
 │   ├── hooks/                 # useAnimation, etc.
-│   ├── api/                    # server.ts (Fase 1) + server-phase2/3/4.js (Antigravity)
+│   ├── api/                    # server-phase4.js (API oficial) + server.ts (Fase 1, referencia)
 │   ├── orchestration/       # Sistema Antigravity
 │   ├── quality/
 │   ├── security/
@@ -151,7 +151,7 @@ DealPulseHub/
 │   └── penpot-extract.js    # Penpot → assets (extracción REST)
 ├── .github/workflows/       # deploy-storybook.yml, figma-sync.yml
 ├── docs/                        # Documentación detallada por tema
-├── .claude/rules/             # Arquitectura, metodología, protocolos (ver ARCHITECTURE_MAP.md)
+├── .claude/rules/             # Metodología y protocolos internos (no trackeado en git)
 ├── jest.config.js, tsconfig.json, eslint.config.js
 └── package.json
 ```
@@ -171,8 +171,9 @@ npm run type-check       # tsc --noEmit
 npm run lint                # ESLint
 
 # Backend Antigravity
-npm run dev:api | api                       # Fase 1 (dev / prod)
-npm run api:phase2 | api:phase3 | api:phase4  # Fases 2-4
+npm run api | dev:api                        # API oficial (Fase 4 completa)
+npm run api:legacy-v1                        # Prototipo Fase 1 (solo referencia histórica)
+npm run api:phase2 | api:phase3              # Incrementos intermedios (referencia)
 npm run demo:phase2 | demo:phase3 | demo:phase4  # Demos (no son tests)
 npm run cli | dev:cli                        # CLI
 
@@ -191,13 +192,13 @@ Ver [`docs/FIGMA_INTEGRATION.md`](docs/FIGMA_INTEGRATION.md)
 
 ## 📚 Documentación Completa
 
-- [**Architecture Map**](.claude/rules/ARCHITECTURE_MAP.md) — los 4 sistemas explicados
+- [**Architecture Map**](docs/ARCHITECTURE_MAP.md) — los 4 sistemas explicados
 - [**Componentes**](docs/COMPONENTS.md) — Guía detallada
 - [**Tokens**](docs/TOKENS.md) — Sistema de diseño
 - [**Best Practices**](docs/BEST_PRACTICES.md) — Patrones recomendados
 - [**Ejemplos Avanzados**](docs/ADVANCED_EXAMPLES.md) — Casos de uso
 - [**Figma Integration**](docs/FIGMA_INTEGRATION.md) — Sync automático
-- [**NPM Publishing**](docs/NPM_PUBLISHING.md) — Checklist previo a publicar (aún no ejecutado)
+- [**NPM Publishing**](docs/NPM_PUBLISHING.md) — Checklist usado para la publicación v1.0.0
 - [**Contributing**](docs/CONTRIBUTING.md) — Cómo contribuir
 
 ## 🔐 Type Safety
@@ -221,12 +222,13 @@ import { Button, Card, colors } from '@dealpulsehub/design-system';
 
 ## 🚀 Próximos Pasos
 
-- [ ] Decidir y ejecutar publicación a npm (`@dealpulsehub/design-system`) — ver `docs/NPM_PUBLISHING.md`
-- [ ] Resolver bug conocido en `demo:phase4` (workflow end-to-end retorna `undefined`)
-- [ ] Decidir si `server-phase4.js` reemplaza a `server.ts` como API oficial
-- [ ] Upgrade mayor de Storybook (7→8+) para cerrar vulnerabilidades restantes (requiere verificación manual del build)
+- [x] Publicación a npm (`@dealpulsehub/design-system@1.0.0`) — publicado 2026-08-10
+- [x] Bug de `demo:phase4` (workflow end-to-end) — corregido 2026-08-10
+- [x] `server-phase4.js` es la API oficial (`npm run api`) — decidido 2026-08-10
+- [x] Upgrade mayor de Storybook (7→8) — completado, 21→3 vulnerabilidades
 - [ ] Agregar más componentes (Modal, Dropdown, Alert)
 - [ ] Temas (Light/Dark mode)
+- [ ] Cerrar las 3 vulnerabilidades restantes (cadena `@storybook/addon-actions` → `uuid`, sin fix disponible aún)
 
 ## 📝 License
 
@@ -236,4 +238,4 @@ MIT © DealPulseHub
 
 - 📧 Email: contact@dealpulsehub.net
 - 🌐 Website: www.dealpulsehub.net
-- 📖 Docs: `docs/` + `.claude/rules/ARCHITECTURE_MAP.md`
+- 📖 Docs: `docs/` + `docs/ARCHITECTURE_MAP.md`

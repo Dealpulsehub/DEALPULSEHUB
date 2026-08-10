@@ -46,7 +46,7 @@
   ],
   "scripts": {
     "dev": "storybook dev -p 6006",
-    "dev:api": "ts-node src/api/server.ts",
+    "dev:api": "node src/api/server-phase4.js",
     "dev:cli": "node src/cli/index.js",
     "build": "tsc -p tsconfig.build.json && npm run build-tokens",
     "build-tokens": "node scripts/build-tokens.js",
@@ -59,7 +59,8 @@
     "penpot:extract": "node scripts/penpot-extract.js",
     "lint": "eslint src",
     "prepublish": "npm run build && npm run type-check",
-    "api": "ts-node src/api/server.ts",
+    "api": "node src/api/server-phase4.js",
+    "api:legacy-v1": "ts-node src/api/server.ts",
     "api:phase2": "node src/api/server-phase2.js",
     "api:phase3": "node src/api/server-phase3.js",
     "api:phase4": "node src/api/server-phase4.js",
