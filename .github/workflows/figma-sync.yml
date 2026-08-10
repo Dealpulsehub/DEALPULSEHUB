@@ -42,11 +42,10 @@ jobs:
             echo "No changes to commit"
           else
             git add src/tokens/figma-tokens.json
-            git commit -m "chore: sync Figma tokens to design system
-
-- Auto-synced from Figma Design System
-- Timestamp: $(date -u +'%Y-%m-%dT%H:%M:%SZ')
-Co-Authored-By: Figma Bot <noreply@figma.com>"
+            git commit -m "chore: sync Figma tokens to design system" \
+              -m "Auto-synced from Figma Design System" \
+              -m "Timestamp: $(date -u +'%Y-%m-%dT%H:%M:%SZ')" \
+              -m "Co-Authored-By: Figma Bot <noreply@figma.com>"
             git push
           fi
 
