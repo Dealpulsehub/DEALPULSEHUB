@@ -41,7 +41,6 @@ pids/
 
 # OS files
 Thumbs.db
-.DS_Store
 
 # Claude Code / AIOX Internal (NEVER commit)
 .ai/
@@ -57,31 +56,6 @@ Thumbs.db
 # Encryption vault (SENSITIVE - master key + encrypted credentials)
 .vault/
 
-# Temp/Generated files
-_archive/
-DEALPULSEHUB-CLEAN/
-DESIGN_SYSTEM_PREVIEW.html
-EXECUTIVE-SUMMARY-*.txt
-FINAL-STEP-*.txt
-HANDOFF.md
-PHASE1_DELIVERABLES.txt
-PROYECTO_REORGANIZACION_COMPLETO.md
-REORGANIZACION_RAPIDA.md
-REORGANIZACION_SUMARIO.json
-WEEK*.md
-_reorganize.ps1
-create-cco-task.ps1
-create_cco_task.py
-debug-storybook.log
-design-system-preview.html
-graphify-out/
-kit-del-heredero/
-landing/
+# Temp/Generated files (específicos de DealPulseHub)
 nul
-obsidian-vault/
-phase4-*.html
-pr_body.txt
-reel1-instagram.jpeg
-v1-preview.jpeg
-video-editor/
-vsl-heredero-financiero/
+debug-storybook.log
