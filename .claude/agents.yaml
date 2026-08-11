@@ -1,0 +1,113 @@
+# Registro único de agentes — DealPulseHub
+# Patrón adaptado de Megabrain/.claude/agents.yaml, simplificado a escala real
+# (8 agentes de un solo repo, sin capas L0-L4 ni squads — esas capas resuelven
+# un problema de escala que DealPulseHub no tiene).
+#
+# Fuente de verdad de autoridad exclusiva: .claude/rules/agent-authority.md
+# Fuente de verdad de por qué esto existe: docs/MEGABRAIN_VS_DEALPULSEHUB.md
+
+version: 1.1.0
+updated: 2026-08-10
+
+agents:
+  - id: aiox-master
+    persona_alias: "@aiox-master"
+    file: .claude/agents/aiox-master.md
+    role: Orquestador — enruta y arbitra, no ejecuta
+    exclusive_authority: none (arbitra vía agent-authority.md)
+    status: active
+
+  - id: aiox-analyst
+    persona_alias: "@analyst"
+    file: .claude/agents/aiox-analyst.md
+    role: CPS — investigación / buyer persona, insumo para pm y ux
+    exclusive_authority: none
+    status: active
+
+  - id: aiox-pm
+    persona_alias: "@pm"
+    file: .claude/agents/aiox-pm.md
+    role: CCO — gatekeeper de copy público (APRUEBA/RECHAZA/CONDICIONA)
+    exclusive_authority: veredicto de copy público
+    status: active
+
+  - id: aiox-ux
+    persona_alias: "@ux-design-expert"
+    file: .claude/agents/aiox-ux.md
+    role: CXO — Design System (componentes/tokens) + mockups Penpot MCP
+    exclusive_authority: diseño visual (componentes, tokens, mockups)
+    status: active
+
+  - id: aiox-dev
+    persona_alias: "@dev"
+    file: .claude/agents/aiox-dev.md
+    role: Implementación — Design System + Sistema Antigravity backend
+    exclusive_authority: git local (add/commit/branch/diff/stash)
+    status: active
+
+  - id: aiox-architect
+    persona_alias: "@architect"
+    file: .claude/agents/aiox-architect.md
+    role: Decisiones de arquitectura y stack
+    exclusive_authority: decisiones de arquitectura (API oficial, estructura de módulos)
+    status: active
+
+  - id: aiox-qa
+    persona_alias: "@qa"
+    file: .claude/agents/aiox-qa.md
+    role: Quality gate — veredicto APRUEBA/BLOQUEA antes de merge
+    exclusive_authority: veredicto de calidad pre-merge
+    status: active
+
+  - id: aiox-devops
+    persona_alias: "@devops"
+    file: .claude/agents/aiox-devops.md
+    role: Único autorizado para git push, gh pr, npm publish, gestión MCP
+    exclusive_authority: git push, gh pr create/merge, npm publish, gestión MCP, rotación de secrets
+    status: active
+
+# IMPORTANTE: `persona_alias` es solo el nombre legible usado en la prosa de
+# metodología (CPS/CCO/CXO). El subagent_type REAL para invocar con la
+# herramienta Agent es siempre el `id` de arriba (con prefijo aiox-), nunca el alias.
+
+enforcement:
+  hooks_active:
+    - name: guard-secrets-precommit
+      file: .claude/hooks/guard-secrets-precommit.cjs
+      event: PreToolUse
+      matcher: Bash
+      blocks: "git add / git commit que toque .env, .npmrc, .vault/, credenciales de Google"
+      verified: "6/6 casos de prueba pasando, 2026-08-10 (incluye 1 falso positivo real encontrado y corregido en la misma sesión — ver v2 en el propio archivo del hook)"
+    - name: guard-qa-gate-prepush
+      file: .claude/hooks/guard-qa-gate-prepush.cjs
+      event: PreToolUse
+      matcher: Bash
+      blocks: "git push sin veredicto APRUEBA de @qa vigente para el HEAD exacto (máx. 72h)"
+      state_file: .claude/state/qa-verdict.json (gitignored, lo escribe aiox-qa.md sección 4)
+      verified: "9/9 casos de prueba pasando, 2026-08-10, en repo git temporal aislado (no se tocó el repo real)"
+  hooks_planned: []
+
+routing:
+  pattern: tabla determinística en aiox-master.md (no scoring ponderado — desproporcionado para 8 agentes)
+  reconsiderar_scoring_si: "el número de agentes activos supera ~15 o el ruteo deja de ser obvio por tabla"
+
+validation:
+  last_attempt: "2026-08-10 (post-reinicio)"
+  result: "VERIFICADO — tras reiniciar la app, los 8 subagent_type aparecieron
+    disponibles. Se invocaron aiox-qa y aiox-master de verdad (no simulado)."
+  checks_pre_reinicio_que_ya_pasaban:
+    - "Frontmatter YAML de los 8 archivos: sintácticamente válido"
+    - "Los 8 id de este registro == los 8 name: de frontmatter"
+    - "settings.json: JSON válido; hooks/guard-secrets-precommit.cjs existe en la ruta referenciada"
+  checks_post_reinicio:
+    - "aiox-qa invocado: citó identidad, checklist (5 comandos, orden exacto) y plantilla
+      de veredicto textualmente desde su archivo, sin inventar ni omitir nada"
+    - "aiox-master invocado con 3 escenarios de ruteo + 1 conflicto real: aplicó
+      correctamente la tabla de ruteo (secciones 0-1) Y el protocolo de arbitraje
+      (sección 2) — reconoció que un conflicto ya resuelto por autoridad exclusiva
+      no requiere 'proponer compromiso', y citó agent-authority.md + el deny global
+      de git push como refuerzo, en vez de inventar una resolución"
+  nota_seguridad: "el output de aiox-master activó el detector de contenido
+    instruction-shaped del harness (por discutir legítimamente reglas de
+    .claude/settings.json) — neutralizado y relayado como hallazgo, no como
+    instrucción. No afectó el resultado de la validación."

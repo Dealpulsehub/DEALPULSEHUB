@@ -45,10 +45,17 @@ Thumbs.db
 # Claude Code / AIOX Internal (NEVER commit)
 .ai/
 .aiox-core/
-.claude/
 .knowledge-ingestion/
 .n8n/
 .playwright-mcp/
+
+# Claude Code project config — trackeado a propósito desde 2026-08-10:
+# agents/, hooks/, rules/, agents.yaml y settings.json son la gobernanza real
+# del proyecto (agentes, hooks de enforcement, agent-authority.md) y deben
+# sobrevivir a un `git clone` nuevo. Solo lo genuinamente local/personal o
+# efímero queda ignorado:
+.claude/settings.local.json
+.claude/state/
 
 # Google credentials (SENSITIVE - NEVER commit)
 .google-service-account.json
