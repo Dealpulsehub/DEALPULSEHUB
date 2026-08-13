@@ -85,6 +85,9 @@
     "react-intersection-observer": "^11.0.0",
     "uuid": "^14.0.1"
   },
+  "overrides": {
+    "uuid": "^14.0.1"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.29.7",
     "@babel/preset-react": "^7.29.7",
