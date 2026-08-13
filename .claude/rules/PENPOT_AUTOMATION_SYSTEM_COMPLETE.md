@@ -53,6 +53,36 @@
 > `normalizePagesIndex()` (en `scripts/lib/penpot-client.js`) encuentra las
 > páginas del archivo — es el único punto sin verificación end-to-end.
 >
+> **Evaluado y descartado 2026-08-13 — n8n-mcp como atajo para este pipeline.**
+> La "Sala de Máquinas" (auditoría operativa de ese mismo día) sugería evaluar
+> `n8n-mcp` en vez de escribir el pipeline a mano en Node. Se evaluó con la
+> instancia real conectada (`n8n_health_check`): **no es un sandbox vacío** —
+> es una instancia de producción (`209.126.9.114:5678`) con 21 workflows,
+> varios `active: true` corriendo automatizaciones de negocio de OTROS
+> proyectos (Heredero Financiero, INTEL ad audit, etc.). Tres razones para
+> no migrar:
+>
+> 1. **No existe nodo nativo de Penpot.** n8n necesitaría el mismo `HTTP
+>    Request` crudo contra la REST API de Penpot que ya envuelve
+>    `scripts/lib/penpot-client.js` — mover el pipeline no elimina trabajo
+>    de integración, solo lo reubica fuera de control de versiones.
+> 2. **Bypass de gobernanza real.** El nodo `GitHub` de n8n podría crear el
+>    PR directamente con credenciales propias de esa instancia — pero eso
+>    saltaría por completo el deny global de `gh pr create*` de Claude Code
+>    y, más grave, el hook `guard-qa-gate-prepush.cjs` (9/9 casos de prueba)
+>    que ata cada push a un veredicto de QA sobre el commit exacto. No es un
+>    atajo, es un agujero en el mismo gate que se construyó y probó aposta.
+> 3. **La única parte del pipeline ya verificada en producción**
+>    (construcción + auditoría de boards reales vía Penpot MCP
+>    `execute_code`, 2026-08-07) es una capacidad del lado de Claude Code —
+>    n8n no puede conducir esa sesión MCP en absoluto, con o sin nodo nativo.
+>
+> Mezclar el pipeline experimental de DealPulseHub en una instancia
+> compartida que ya sostiene automatizaciones de ingresos de otros proyectos
+> añade riesgo operativo sin beneficio real. **Uso legítimo a futuro, no
+> adoptado ahora:** un trigger de cron en n8n para el paso de solo-lectura
+> (extracción) exclusivamente, nunca para nada que toque git/GitHub.
+>
 > Este documento queda como referencia histórica de la decisión "Penpot vs
 > Figma" (sección siguiente, sigue siendo válida).
 
