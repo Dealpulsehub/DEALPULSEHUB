@@ -23,9 +23,15 @@ dist/
 build/
 *.tsbuildinfo
 
+# Test coverage (jest --coverage output, regenerado en cada corrida)
+coverage/
+
 # Storybook
 storybook-static/
 .storybook/node_modules/
+
+# Graphify (code knowledge graph, regenerado semanalmente — ver scripts/graphify-weekly-update.ps1)
+graphify-out/
 
 # Logs
 logs/
