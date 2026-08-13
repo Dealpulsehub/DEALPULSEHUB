@@ -13,8 +13,7 @@
 > Este documento describe scripts en **Python**, pero nunca se implementaron —
 > el codebase real de DealPulseHub es **100% Node.js** (`scripts/figma-sync.js`,
 > `scripts/penpot-extract.js`, ver `package.json`). No copies estos snippets
-> tal cual; si necesitas el flujo de extracción REST batch, usa
-> `scripts/penpot-extract.js` (ya implementado y probado con `npm run penpot:extract`).
+> tal cual.
 >
 > Además, la vía **preferida hoy** para crear/modificar mockups ya NO es
 > "extraer después de diseñar manualmente" — es **construcción programática
@@ -25,10 +24,37 @@
 > **Protocolo completo y actualizado (global, cualquier proyecto):**
 > `C:\Users\Oscar\.claude\rules\PENPOT_MCP_PRODUCTION_PROTOCOL.md`
 >
+> **Actualizado 2026-08-13 — el pipeline de este documento ya existe en Node,**
+> con un matiz importante sobre `penpot-extract.js`: `main()` solo lista
+> proyectos/archivos (`get-projects`/`get-project-files`); nunca llegó a llamar
+> a `exportFileAsPng()`, pese a que la función existe y está bien formada —
+> era extracción sin terminar de cablear, no "ya implementado y probado" como
+> decía esta nota antes. El resto del pipeline sí se completó en esta fecha:
+>
+> - `scripts/penpot-audit.js` — neuro-auditoría WCAG real (misma matemática
+>   que ya corrió con éxito vía MCP `execute_code` el 2026-08-07, ahora
+>   versionada en `scripts/lib/wcag-contrast.js` + `penpot-shapes.js`, con
+>   15 tests reales — `npm run test:scripts`).
+> - `scripts/penpot-variations.js` — genera un PLAN de variaciones A/B (no
+>   escribe en Penpot; no existe una ruta de escritura vía REST probada para
+>   este proyecto) con el snippet de `storage.recolor(...)` listo para pegar
+>   en una sesión MCP real.
+> - `scripts/penpot-prepare-pr.js` — arma el cuerpo del PR a partir de los
+>   artefactos anteriores; se detiene antes de `git push`/`gh pr create`
+>   porque ambos están en el deny global (ver `agent-authority.md`) — no
+>   finge automatizar lo que de todas formas exige aprobación humana.
+>
+> `npm run penpot:pipeline` corre los cuatro pasos en orden. ⚠️ La parte de
+> red de `audit`/`variations` (llamada a `get-file`, nunca usada antes por
+> ningún script de este repo) es best-effort, sin verificar contra un
+> workspace real en esta sesión — no había `.env` con credenciales
+> configurado en este entorno. Antes de confiar en el pipeline en producción,
+> correrlo una vez con credenciales reales y confirmar que
+> `normalizePagesIndex()` (en `scripts/lib/penpot-client.js`) encuentra las
+> páginas del archivo — es el único punto sin verificación end-to-end.
+>
 > Este documento queda como referencia histórica de la decisión "Penpot vs
-> Figma" (sección siguiente, sigue siendo válida) y como inspiración para
-> Fase 3 (specs JSON + PR automático a @dev), que sí sigue pendiente de
-> implementar — pero en Node, no Python.
+> Figma" (sección siguiente, sigue siendo válida).
 
 ---
 

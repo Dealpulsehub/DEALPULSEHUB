@@ -13,6 +13,8 @@
  *   npm run penpot:extract
  *
  * Referencia de diseño: .claude/rules/PENPOT_AUTOMATION_SYSTEM_COMPLETE.md
+ *   (pipeline completo en scripts/penpot-variations.js, penpot-audit.js,
+ *   penpot-prepare-pr.js — ver npm run penpot:pipeline)
  */
 
 require('dotenv').config();
@@ -40,7 +42,7 @@ function assertConfigured() {
     console.error('   4. Copia el token → PENPOT_API_KEY en .env');
     console.error('   5. El workspace/team id aparece en la URL del dashboard → PENPOT_WORKSPACE_ID en .env');
     console.error('');
-    console.error('   Detalle completo: .claude/rules/FASE_1_START_AHORA.md');
+    console.error('   Detalle completo: docs/archive/FASE_1_START_AHORA.md');
     process.exit(1);
   }
 }

@@ -101,3 +101,23 @@ ejecuta, no solo en un documento que la describe. Ambos hooks son fail-open ante
 cualquier fallo inesperado — son una capa adicional sobre la aprobación humana
 obligatoria que ya exige el deny global de `git push*`, nunca la única barrera.
 El registro completo de agentes y enforcement está en `.claude/agents.yaml`.
+
+**Actualizado 2026-08-13 (tercera capa, verificada — no es un gate):** además de los
+dos hooks propios de arriba, `.claude/settings.json` registra un tercer `PreToolUse`
+sobre `Bash` (matcher de búsqueda) y uno sobre `Read|Glob`, ambos apuntando a
+`graphify.EXE hook-guard <search|read>`. A diferencia de los dos anteriores, **este
+no es un gate — nunca bloquea nada.** Verificado leyendo el código fuente
+(`graphify/cli.py::_run_hook_guard`, issue #522 del propio proyecto) y confirmado con
+8 casos de prueba negros contra el binario real: siempre sale con exit 0, envuelto en
+`try/except` de punta a punta, y su único efecto es escribir un `additionalContext`
+(nudge de texto) recordando usar `graphify query/explain/path` en vez de leer archivos
+crudos o grepear — nunca un `decision: block`. Dispara sobre `Read`/`Glob` de
+archivos con extensión de código o `.md` (24 extensiones) que no estén ya bajo
+`graphify-out/`, y sobre comandos `Bash` que contengan `grep`/`rg `/`find `/`fd `/
+`ack `/`ag ` como substring — en ambos casos, solo si `graphify-out/graph.json`
+existe. Costo medido: ~160ms de proceso Python por invocación (8 corridas, rango
+156–172ms) — no bloquea nunca, pero sí añade esa latencia a la gran mayoría de
+lecturas de este repo, porque `.md` está incluido en la lista de extensiones.
+No requiere la misma disciplina de prueba que un gate real (no puede romper un flujo
+legítimo bloqueándolo) — se documenta aquí por transparencia de qué corre delante de
+cada tool call, no porque sea un cuarto punto de autoridad.

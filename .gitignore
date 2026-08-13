@@ -72,3 +72,9 @@ Thumbs.db
 # Temp/Generated files (específicos de DealPulseHub)
 nul
 debug-storybook.log
+
+# Salidas del pipeline de Penpot (scripts/penpot-*.js) — artefactos
+# regenerables, no fuente. design_specs/PR_BODY.md en particular es
+# input para un PR, no algo a versionar directamente.
+design_assets/
+design_specs/
