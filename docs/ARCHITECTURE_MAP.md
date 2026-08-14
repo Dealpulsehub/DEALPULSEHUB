@@ -41,9 +41,11 @@ DealPulseHub (1 solo repo, 4 sistemas)
 │     └─ Reemplaza en gran parte al Figma Sync para creación (no solo extracción)
 │
 └─ 4. METODOLOGÍA (Opción C Divisional + roles CPS/CCO/CXO/CAO)
-      └─ .claude/rules/ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md y relacionados
-      └─ Es la CAPA DE PROCESO — gobierna cómo se decide trabajar,
-         independiente del código en src/
+      ├─ .claude/rules/ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md y relacionados
+      ├─ Es la CAPA DE PROCESO — gobierna cómo se decide trabajar,
+      │  independiente del código en src/
+      └─ 4.1 Puente Megabrain (scripts/megabrain-expert.js) — herramienta de
+         consulta, NO un quinto sistema. Ver sección 4️⃣.1
 ```
 
 ---
@@ -139,6 +141,75 @@ bajo la misma metodología de decisión.
 
 ---
 
+## 4️⃣.1 Puente Megabrain — consulta de expertos (decisión @architect 2026-08-13)
+
+**Veredicto: APROBADO CON CAMBIOS.** El diseño de `@analyst` (CPS) para
+`scripts/megabrain-expert.js` se aprueba en su forma general (script CommonJS de
+solo lectura, sin dependencias nuevas, consulta puntual bajo demanda), con 3
+cambios obligatorios y 1 recomendado antes de que `@dev` lo dé por terminado.
+
+### Por qué NO es un quinto sistema
+
+Los 4 sistemas de este mapa son cuerpos de código con estado, ciclo de vida y
+superficie propia. Esto es ~150 líneas de solo lectura que no genera artefactos,
+no expone endpoints y no participa de ningún build. Elevarlo a "sistema 5"
+inflaría el mapa y sugeriría un acoplamiento mayor del que existe. Es una
+**herramienta de la capa de metodología (sistema 4)**: alimenta el criterio
+humano/agente de los roles CPS/CCO, no el código de los sistemas 1–3.
+
+### Frontera entre repos (no negociable)
+
+Megabrain es un **repositorio git independiente** (`Megabrain/.git` verificado),
+no un submódulo ni un paquete. Reglas de acoplamiento:
+
+1. **Una sola dirección, solo lectura.** DealPulseHub lee de Megabrain. Nunca
+   escribe en `Megabrain/`, nunca al revés.
+2. **Dependencia opcional.** Si `MEGABRAIN_PATH` no está o la ruta no existe, el
+   script falla con error explicativo y `exit 1` — y *nada más del repo se rompe*.
+3. **Prohibido en cualquier ruta automática:** no entra en `.github/workflows/ci.yml`,
+   ni en `npm run build`, `test`, `prepublish` ni `penpot:pipeline`. Solo invocación
+   manual (`npm run megabrain:expert -- <nombre>`).
+4. **Prohibido vendorizar.** No copiar `AGENT.md`/`SOUL.md` al repo, ni como caché
+   commiteada, ni como submódulo. Son ~1 MB en 58 expertos y Megabrain es su única
+   fuente de verdad; una copia aquí sería un fork obsoleto con dos verdades.
+5. **Ruta por `.env`, nunca hardcodeada.** `.env` ya está en `.gitignore`. Como el
+   repo no tiene `.env.example`, la variable se documenta en el header del script,
+   igual que `scripts/penpot-extract.js` documenta `PENPOT_API_KEY`.
+
+### Cambios obligatorios sobre la propuesta de CPS
+
+| # | Cambio | Por qué (verificado) |
+|---|---|---|
+| 1 | Leer el campo **`path:`** de cada entrada del índice, no reconstruir la ruta por convención | `AGENT-INDEX.yaml` ya trae `path: agents/persons/<X>/` en las 58 entradas de `minds:`, y el mapeo id→carpeta coincide 1:1 con el filesystem. El índice es la fuente autoritativa; reconstruir `id → NOMBRE_MAYUS` duplica una convención que el índice ya resuelve. La convención se mantiene **solo como fallback** cuando el id no está indexado. |
+| 2 | **Contención de ruta obligatoria**: resolver la ruta final y abortar si no queda dentro de `<MEGABRAIN_PATH>/agents/persons/` | 🔒 El fallback por convención deriva la ruta del input del usuario. Sin esta verificación, un nombre como `../../../algo` convierte el script en lectura arbitraria de archivos, cuyo contenido además se vuelca a stdout y de ahí al contexto de un LLM. Severidad baja (local, un solo usuario), pero el costo del fix es una línea. |
+| 3 | El bloque `minds:` termina en **la siguiente clave de nivel superior**, no en `cargo:` | Verificado en el archivo real: el orden es `minds:` (L28) → `conclave:` (L324) → `cargo:` (L339). Un regex que corte en `cargo:` se traga los 3 agentes de `conclave` como si fueran expertos. |
+
+**Recomendado (no bloqueante):** modo `--list` (imprime los ids del índice) y flags
+`--soul` / `--agent` para traer un solo archivo. Sin `--list`, descubrir los 58
+nombres válidos obliga a abrir Megabrain a mano. Los flags importan porque el
+experto más grande (`MIKE_FILSAIME`: 66 KB + 17 KB) son ~21k tokens en una sola
+consulta; la media (~18 KB ≈ 4.5k tokens) sí es asumible por defecto.
+
+### Confirmado sin cambios
+
+- **Sin librería YAML.** Correcto: agregar una dependencia de producción para un
+  parseo de una sección estable no se justifica. Se acepta el regex acotado.
+- **Fallback por convención + aviso si falta `AGENT.md` o `SOUL.md`.** Correcto y
+  necesario: el propio `AGENT-INDEX.yaml` advierte que `agent_index_updater.py`
+  puede revertir correcciones manuales, así que el índice *puede* desincronizarse
+  del disco. Un índice desactualizado debe degradar a aviso, no a fallo duro.
+- **Nombre y namespace.** `megabrain:expert` es consistente con `penpot:*` /
+  `figma:sync`. `process.argv.slice(2)` ya es patrón establecido en 10 scripts.
+- **Estilo.** Seguir `scripts/penpot-extract.js`: shebang, header JSDoc con
+  Requisitos/Uso, `require('dotenv').config()`, error de configuración con pasos
+  concretos + `process.exit(1)`, `main()` al final.
+
+**Siguiente paso:** `@dev` implementa. `@qa` valida especialmente el cambio 2
+(contención de ruta) y el 3 (que `--list` / la resolución no devuelva agentes de
+`conclave`).
+
+---
+
 ## ✅ Estado de coherencia (post-auditoría 2026-08-10)
 
 | Área | Antes | Después |
@@ -156,6 +227,7 @@ bajo la misma metodología de decisión.
 | Vulnerabilidades Storybook | ❌ 21 moderadas (Storybook 7.x) | ✅ 3 (upgrade verificado a Storybook 8.x) |
 | Node version en CI | ❌ Node 18 (incompatible con Storybook 8) | ✅ Node 20, `engines.node` actualizado |
 | Este documento | ❌ No existía | ✅ Creado |
+| Acceso a los 58 expertos de Megabrain | ❌ Manual, abriendo el otro repo a mano | 🟡 Diseño aprobado con cambios (`scripts/megabrain-expert.js`) — pendiente de `@dev`, ver 4️⃣.1 |
 
 ---
 
@@ -163,4 +235,5 @@ bajo la misma metodología de decisión.
 
 - `PENPOT_MCP_PRODUCTION_PROTOCOL.md` (global) — sistema 3
 - `ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md` — sistema 4
+- `docs/MEGABRAIN_VS_DEALPULSEHUB.md` — relación entre los dos repos (gobernanza) — contexto de 4️⃣.1
 - `.ai/decision-log.md` — historial completo de decisiones y hallazgos de esta auditoría

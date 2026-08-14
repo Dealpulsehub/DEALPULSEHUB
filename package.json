@@ -62,6 +62,7 @@
     "penpot:variations": "node scripts/penpot-variations.js",
     "penpot:prepare-pr": "node scripts/penpot-prepare-pr.js",
     "penpot:pipeline": "npm run penpot:extract && npm run penpot:audit && npm run penpot:variations && npm run penpot:prepare-pr",
+    "megabrain:expert": "node scripts/megabrain-expert.js",
     "lint": "eslint src",
     "prepublish": "npm run build && npm run type-check",
     "api": "node src/api/server-phase4.js",
