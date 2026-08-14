@@ -2,8 +2,33 @@
 
 **Documento:** Cómo @aiox-master orquesta las 4 divisiones  
 **Versión:** 1.0.0  
-**Status:** ✅ LIVE  
+**Status:** 🟡 PARCIALMENTE VIGENTE — ver nota de poda  
 **Propósito:** Velocidad + Consistencia sin burocracia
+
+---
+
+> ⚠️ **NOTA DE PODA — 2026-08-13:** Este documento asume un equipo con varias
+> personas ejecutando rituales de calendario fijo (daily standup 10 min,
+> resolución de conflictos en 20 min, escalation matrix de 3 niveles). En la
+> práctica DealPulseHub es Oscar + Claude Code — ninguno de esos rituals
+> corrió jamás en fecha/hora fija, y no hace falta que lo haga.
+>
+> **Lo que SÍ es real y vigente** (no se poda): el rol conceptual de
+> `@aiox-master` como router/árbitro sin autoridad de aprobación — ver
+> `.claude/rules/agent-authority.md` sección "Flujo de Ruteo / Arbitraje",
+> que es la fuente actual y verificada de cómo se invoca de verdad
+> (`Agent` tool, `subagent_type: aiox-master`) y qué hace en la práctica.
+> Los "8 conflictos comunes y soluciones" (sección de abajo) también siguen
+> siendo útiles como catálogo de patrones de arbitraje, independientemente
+> de que no haya standup diario.
+>
+> **Lo que es aspiracional y nunca se ejecutó** (leer con ese filtro, no como
+> hecho): "Daily Standup de @aiox-master", "Escalation Matrix" con SLAs en
+> minutos/horas, "Checklist antes de deployment" como ritual formal. El
+> reemplazo real de todo eso es: Oscar pide una tarea → el agente relevante
+> (o `aiox-master` si no hay dueño claro) la resuelve → si hay push de por
+> medio, pasa por el hook `guard-qa-gate-prepush.cjs` + aprobación humana
+> explícita (ver `agent-authority.md`), no por un "SLA de 20 minutos".
 
 ---
 

@@ -2,9 +2,45 @@
 
 **Documento:** Herramientas fáciles de integrar para @product-design-expert  
 **Versión:** 1.0.0  
-**Status:** 🟢 READY TO IMPLEMENT  
+**Status:** 🟡 PREMISA SUPERADA (Figma → Penpot) — ver nota  
 **Propósito:** Extraer diseños, templates, plugins, iconos, animaciones  
 **Criterio:** FÁCIL DE CONFIGURAR (< 30 minutos setup)
+
+---
+
+> ⚠️ **NOTA — 2026-08-13:** Este documento asume un flujo de trabajo en **Figma**
+> (marketplace de plugins instalables desde la UI, one-click imports, etc.). El
+> proyecto ya no diseña en Figma — el flujo real y vigente es **Penpot MCP**
+> (`execute_code` sobre la sesión del navegador), documentado en
+> `C:\Users\Oscar\.claude\rules\PENPOT_MCP_PRODUCTION_PROTOCOL.md` (global).
+> Penpot **no tiene marketplace de plugins como Figma** — nada de la sección 7
+> ("Figma Plugins") se instala de la misma forma, y la mayoría de esos plugins
+> simplemente no tienen equivalente 1:1 en Penpot hoy.
+>
+> Qué SÍ tiene equivalente real, verificado en producción:
+> - **Fotos de stock** (Unsplash y similares) → `penpot.uploadMediaUrl(nombre, url)`
+>   trae la imagen directo por código y la asigna como `fillImage` de un shape.
+>   Verificado 2026-08-07 sobre mockups reales. Ver protocolo global, sección
+>   "Importar imágenes reales por URL".
+> - **Colores** (Color Hunt y similares) → no hace falta plugin en absoluto,
+>   son valores hex directos en `shape.fills` vía código.
+> - **Tipografía** (Google Fonts) → Penpot integra Google Fonts de forma nativa
+>   en su selector de fuentes (no es específico de MCP); no se ha verificado
+>   aún si `execute_code` puede fijar una fuente de Google Fonts que no esté ya
+>   cargada en el proyecto.
+>
+> Qué NO tiene equivalente verificado (gap real, no asumir que "ya se resolvió"):
+> - **Iconos** (Phosphor/Heroicons/Material) — no existe un flujo probado para
+>   traer un SVG de icono e insertarlo como shape vía `execute_code`.
+> - **Animaciones/motion** (Lottie/Rive/Framer Motion) — Penpot es una
+>   herramienta de diseño estático; no aplica vía este canal.
+> - **Ilustraciones** (Storyset) — mismo gap que iconos, sin flujo probado.
+>
+> El resto del documento (secciones 1-6, 8-10: templates, matriz de
+> comparación, setup por fases) sigue siendo útil como **catálogo de recursos**
+> (qué existe, qué licencia tiene) — solo la mecánica de instalación asume
+> Figma y debe traducirse a "cómo lo traigo por código a Penpot" caso por caso,
+> no asumirse automática.
 
 ---
 
