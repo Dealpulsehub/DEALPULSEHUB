@@ -37,15 +37,16 @@ function auditFile(fileId, fileName, pagesIndex) {
   const results = texts.map((t) => {
     const bg = findBackgroundFor(t, shapes);
     const style = t.textStyle || { fontSize: 16, fontWeight: 400, assumed: true };
-    const textFill = t.fills?.[0]?.fillColor || '#000000';
-    const evalResult = evaluateContrast(textFill, bg.fillColor, style.fontSize, style.fontWeight);
+    const textFillInfo = t.textFill || { fillColor: '#000000', assumed: true };
+    const evalResult = evaluateContrast(textFillInfo.fillColor, bg.fillColor, style.fontSize, style.fontWeight);
     return {
       file: fileName,
       fileId,
       page: t.pageName,
       shape: t.name,
       shapeId: t.id,
-      textColor: textFill,
+      textColor: textFillInfo.fillColor,
+      textColorAssumed: !!textFillInfo.assumed,
       backgroundColor: bg.fillColor,
       backgroundSource: bg.source,
       backgroundAssumed: bg.assumed,
@@ -83,7 +84,7 @@ async function main() {
 
   const pass = allResults.filter((r) => r.pass).length;
   const fail = allResults.filter((r) => !r.pass).length;
-  const assumed = allResults.filter((r) => r.backgroundAssumed || r.styleAssumed).length;
+  const assumed = allResults.filter((r) => r.backgroundAssumed || r.styleAssumed || r.textColorAssumed).length;
 
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   fs.writeFileSync(

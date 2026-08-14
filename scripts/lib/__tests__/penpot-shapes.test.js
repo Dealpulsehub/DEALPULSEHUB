@@ -9,7 +9,7 @@
 
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
-const { isContainedIn, findBackgroundFor } = require('../penpot-shapes');
+const { isContainedIn, findBackgroundFor, extractTextFill } = require('../penpot-shapes');
 
 const board = { id: 'board-1', type: 'board', x: 0, y: 0, width: 400, height: 300, fills: [{ fillColor: '#ffffff' }], name: 'OrderBumpCard' };
 const button = { id: 'rect-1', type: 'rect', x: 20, y: 200, width: 360, height: 50, fills: [{ fillColor: '#ef4444' }], name: 'CTA Button' };
@@ -46,4 +46,68 @@ test('findBackgroundFor: sin ningún contenedor, asume blanco y lo marca explíc
   const bg = findBackgroundFor(textOutside, [board, button]);
   assert.equal(bg.assumed, true);
   assert.equal(bg.fillColor, '#ffffff');
+});
+
+// Regresión del bug real 2026-08-13: penpot-audit.js leía shape.fills[0] para
+// el color de texto y caía siempre a '#000000' porque Penpot guarda el fill
+// del texto dentro de `content` (por párrafo/run), no en shape.fills a nivel
+// de shape. Ver comentario en penpot-shapes.js::extractTextFill.
+
+test('extractTextFill: no-text shape devuelve null', () => {
+  assert.equal(extractTextFill(button), null);
+});
+
+test('extractTextFill: usa shape.fills si está presente (texto con color uniforme)', () => {
+  const text = { type: 'text', fills: [{ fillColor: '#ffffff' }] };
+  const fill = extractTextFill(text);
+  assert.equal(fill.fillColor, '#ffffff');
+  assert.equal(fill.assumed, false);
+});
+
+test('extractTextFill: sin shape.fills, cae a buscar dentro de content (caso real que causaba el bug)', () => {
+  const text = {
+    type: 'text',
+    fills: [],
+    content: {
+      children: [
+        { children: [{ fills: [{ fillColor: '#e0e7ff' }], text: 'Cover Subtitle' }] },
+      ],
+    },
+  };
+  const fill = extractTextFill(text);
+  assert.equal(fill.fillColor, '#e0e7ff');
+  assert.equal(fill.assumed, false);
+});
+
+test('extractTextFill: sin fills en ningún lado, asume negro y lo marca explícito (nunca en silencio)', () => {
+  const text = { type: 'text', fills: [], content: { children: [] } };
+  const fill = extractTextFill(text);
+  assert.equal(fill.assumed, true);
+  assert.equal(fill.fillColor, '#000000');
+});
+
+// Limitación conocida, señalada en revisión QA 2026-08-13 (condición para
+// confiar el reporte en producción, no bloqueante para el fix del bug
+// original): un texto con colores mixtos por párrafo/run reporta solo el
+// PRIMER color encontrado (depth-first, izquierda-a-derecha) con
+// assumed:false, ignorando en silencio cualquier otro color presente en el
+// mismo shape. Documentado a propósito — ver comentario en
+// penpot-shapes.js::extractTextFill. Si algún día se corrige (ej. detectar
+// mezcla y marcar assumed:true), este test debe actualizarse.
+test('extractTextFill: colores mixtos por párrafo — reporta solo el primero encontrado (comportamiento actual, no ideal)', () => {
+  const text = {
+    type: 'text',
+    fills: [],
+    content: {
+      children: [
+        { children: [{ fills: [{ fillColor: '#111827' }], text: 'Texto normal ' }] },
+        { children: [{ fills: [{ fillColor: '#ef4444' }], text: 'palabra resaltada' }] },
+      ],
+    },
+  };
+  const fill = extractTextFill(text);
+  // Comportamiento actual: gana el primer run, el segundo color (#ef4444)
+  // queda completamente ignorado — y ni siquiera se marca assumed:true.
+  assert.equal(fill.fillColor, '#111827');
+  assert.equal(fill.assumed, false);
 });
