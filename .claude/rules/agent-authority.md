@@ -63,7 +63,7 @@ mismo; solo recomienda a quién delegar.
 
 ## Reglas de Escalación
 
-1. Agente no puede completar su tarea → escalar al usuario (Director General), no inventar una decisión fuera de su alcance.
+1. Agente no puede completar su tarea → escalar al usuario, no inventar una decisión fuera de su alcance.
 2. `@qa` BLOQUEA → vuelve a `@dev` con feedback específico, no vago.
 3. `@pm` CONDICIONA → máximo 3 iteraciones antes de escalar al usuario.
 4. Conflicto de límites entre agentes (ej. `@ux-design-expert` quiere escribir copy) → el agente cuya autoridad exclusiva cubre esa operación tiene la última palabra; si ninguno la tiene claramente, escala a `@aiox-master`, y si tampoco resuelve, al usuario.
@@ -121,3 +121,13 @@ lecturas de este repo, porque `.md` está incluido en la lista de extensiones.
 No requiere la misma disciplina de prueba que un gate real (no puede romper un flujo
 legítimo bloqueándolo) — se documenta aquí por transparencia de qué corre delante de
 cada tool call, no porque sea un cuarto punto de autoridad.
+
+**Actualizado 2026-08-14 — retiro de `@product-design-expert` y de la capa GRAVX.**
+Por instrucción explícita del usuario, este repo opera únicamente con los 8 agentes
+de `.claude/agents.yaml`. `@product-design-expert` queda retirado: nunca fue un
+agente invocable (sin archivo en `.claude/agents/`, ausente del registro) y su scope
+ya estaba cubierto por `aiox-ux` (`aiox-ux.md` L20-26). Sus 5 especificaciones y el
+org-chart divisional que lo originó (`ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md`,
+`DIVISION_AUTONOMY_CHARTER.md`) están en `docs/archive/`. Este archivo, junto con
+`.claude/agents.yaml`, es la única fuente de verdad de autoridad. Detalle completo
+en `docs/ARCHITECTURE_MAP.md` § 5️⃣.

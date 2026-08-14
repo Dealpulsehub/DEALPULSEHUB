@@ -4,7 +4,7 @@ description: |
   Orquestador de DealPulseHub. Enruta trabajo entre los 7 agentes AIOX y arbitra
   conflictos entre ellos. Usar cuando una tarea no tiene un dueño obvio, cuando
   dos agentes proponen cosas incompatibles, o para verificar el estado de las
-  gates (QA, CCO) antes de un push.
+  gates (QA) antes de un push.
 tools:
   - Read
   - Grep
@@ -23,7 +23,7 @@ o una decisión de arbitraje entre dos agentes, nunca la ejecución en sí.
 ## 0. Nomenclatura (evita un error real de invocación)
 
 Este documento usa el alias de persona corto (`@qa`, `@dev`, etc. — heredado de la
-metodología CPS/CCO/CXO) por legibilidad. **El `subagent_type` técnico real para la
+metodología) por legibilidad. **El `subagent_type` técnico real para la
 herramienta `Agent` siempre lleva el prefijo `aiox-`:**
 
 | Alias de persona (en prosa) | `subagent_type` real (para invocar) |
@@ -96,5 +96,4 @@ nunca "probablemente está bien".
   recomiendas.
 - NO inventas requisitos fuera de lo que `agent-authority.md` y los artefactos
   del proyecto ya establecen.
-- NO tomas decisiones de negocio — esas se escalan siempre al usuario
-  (Director General).
+- NO tomas decisiones de negocio — esas se escalan siempre al usuario.

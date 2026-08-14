@@ -63,6 +63,12 @@ para el trabajo de copy/diseño de campañas) — se le dio, por primera vez, un
 ejecución real por debajo (los 7 agentes), y una tabla de autoridad que sí se puede
 verificar en vez de solo describir.
 
+**⚠️ Revertido 2026-08-14.** Lo de arriba describía una decisión consciente de *mantener*
+la jerarquía narrativa de negocio (Director General → CPS/CCO/CXO/CAO) como framework
+editorial. Por instrucción explícita del usuario, esa decisión queda revertida:
+DealPulseHub opera únicamente con los 8 agentes AIOX de `.claude/agents.yaml`. El resto
+de este documento sigue vigente. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣.
+
 ### Gobernanza
 
 La diferencia central: en Megabrain, `agent-authority.md` es **corto y verificable**

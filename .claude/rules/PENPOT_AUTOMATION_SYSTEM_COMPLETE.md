@@ -4,7 +4,7 @@
 **Versión:** 1.0.0  
 **Status:** 🟢 READY FOR DEPLOYMENT  
 **Decisión:** PENPOT (gratis) > Figma (por automatización)  
-**Propósito:** @product-design-expert extrae assets 100% automáticamente  
+**Propósito:** `aiox-ux` extrae assets 100% automáticamente  
 
 ---
 
@@ -127,7 +127,7 @@ CONCLUSIÓN: PENPOT es la opción CORRECTA para automatización 100%
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  @product-design-expert (Humano)                    │
+│  aiox-ux (agente AIOX)                              │
 │  Crea briefing → Penpot workspace                   │
 └──────────────┬──────────────────────────────────────┘
                │
@@ -749,7 +749,7 @@ DAILY SCHEDULE:
 
 RESULT:
 → 100% automated extraction
-→ No manual work from @product-design-expert
+→ No manual work from aiox-ux
 → @dev gets ready-to-implement specs
 → Zero delays
 ```
@@ -798,7 +798,7 @@ STATUS: 🟢 READY FOR DEPLOYMENT
 
 ```
 BEFORE (Manual process):
-1. @product-design-expert creates mockup in Figma
+1. aiox-ux creates mockup in Figma
 2. Export PNG/SVG manually
 3. Write specs manually
 4. Email to @dev
@@ -806,7 +806,7 @@ BEFORE (Manual process):
 6. Delays: 2-3 days
 
 AFTER (100% Automated):
-1. @product-design-expert creates mockup in Penpot
+1. aiox-ux creates mockup in Penpot
 2. ✅ AUTOMATED: Extract PNG/SVG (daily 09:00 AM)
 3. ✅ AUTOMATED: Generate variations
 4. ✅ AUTOMATED: Generate specs JSON
@@ -816,7 +816,7 @@ AFTER (100% Automated):
 
 RESULT:
 → +1000% faster (zero delays)
-→ Zero manual work (@product-design-expert free)
+→ Zero manual work (aiox-ux free)
 → @dev always has latest specs
 → 100% consistency
 ```

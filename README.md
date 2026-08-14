@@ -120,11 +120,11 @@ Protocolo completo (setup, helpers de código, neuro-auditoría de contraste WCA
 
 ---
 
-## 4️⃣ Metodología (Opción C Divisional)
+## 4️⃣ Gobernanza
 
-Framework de decisión (roles CPS/CCO/CXO/CAO, gates de aprobación, autonomía por división)
-que gobierna cómo se ejecuta el trabajo sobre los 3 sistemas de código de arriba.
-Ver `.claude/rules/ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md`.
+Gobernanza de los 8 agentes AIOX especializados (analyst, pm, ux-design-expert, dev, architect, qa, devops, master)
+que orquestan el trabajo sobre los 3 sistemas de código de arriba.
+Ver `.claude/rules/agent-authority.md` y `.claude/agents.yaml`.
 
 ---
 

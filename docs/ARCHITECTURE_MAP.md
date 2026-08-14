@@ -40,8 +40,8 @@ DealPulseHub (1 solo repo, 4 sistemas)
 │        C:\Users\Oscar\.claude\rules\PENPOT_MCP_PRODUCTION_PROTOCOL.md
 │     └─ Reemplaza en gran parte al Figma Sync para creación (no solo extracción)
 │
-└─ 4. METODOLOGÍA (Opción C Divisional + roles CPS/CCO/CXO/CAO)
-      ├─ .claude/rules/ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md y relacionados
+└─ 4. METODOLOGÍA (gobernanza de los 8 agentes AIOX)
+      ├─ .claude/rules/agent-authority.md + .claude/agents.yaml (fuente vigente)
       ├─ Es la CAPA DE PROCESO — gobierna cómo se decide trabajar,
       │  independiente del código en src/
       └─ 4.1 Puente Megabrain (scripts/megabrain-expert.js) — herramienta de
@@ -129,15 +129,18 @@ la producción de campañas de marketing (mockups de ofertas, ads), que es un ou
 
 ---
 
-## 4️⃣ Metodología (Opción C Divisional)
+## 4️⃣ Metodología (gobernanza de agentes AIOX)
 
-Ver `.claude/rules/ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md`,
-`DIVISION_AUTONOMY_CHARTER.md`, `AIOX_MASTER_COORDINATION_PROTOCOL.md`.
+**Fuente vigente:** `.claude/rules/agent-authority.md` (autoridades exclusivas y flujos)
++ `.claude/agents.yaml` (registro de los 8 agentes + hooks de enforcement).
 
-**Relación con el código:** Esta capa define CÓMO se decide trabajar (roles CPS/CCO/CXO/CAO,
-gates de aprobación) — es independiente de si el trabajo resultante toca el Design System,
-el Sistema Antigravity, o Penpot. Un mismo proyecto puede tocar los 3 sistemas de código
-bajo la misma metodología de decisión.
+La antigua capa "Opción C Divisional" (`ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md`,
+`DIVISION_AUTONOMY_CHARTER.md`) fue retirada el 2026-08-14 — ver sección 5️⃣.
+
+**Relación con el código:** define CÓMO se decide trabajar (quién aprueba qué, qué
+bloquea un push) — independiente de si el trabajo toca el Design System, el Sistema
+Antigravity o Penpot. Un mismo proyecto puede tocar los 3 sistemas bajo la misma
+gobernanza.
 
 ---
 
@@ -210,6 +213,85 @@ consulta; la media (~18 KB ≈ 4.5k tokens) sí es asumible por defecto.
 
 ---
 
+## 5️⃣ Retiro de la capa narrativa GRAVX (decisión @architect 2026-08-14)
+
+**Veredicto: APROBADO.** Por instrucción explícita del usuario, DealPulseHub opera
+únicamente con los 8 agentes AIOX de `.claude/agents.yaml`. Se retira
+`@product-design-expert` y toda la documentación del equipo narrativo aspirational.
+
+### Por qué `@product-design-expert` no debía existir
+
+Nunca fue un agente real: no tiene archivo en `.claude/agents/`, no está en
+`.claude/agents.yaml`, no es invocable con la herramienta `Agent`. Era un rol
+documentado en 5 especificaciones (~131 KB) sin ninguna implementación detrás.
+Su scope completo ya está cubierto por `aiox-ux` (`aiox-ux.md` L20-26: Design
+System **y** "mockups de campaña — product boxes, order bumps, tripwires, ads").
+Mantener las dos descripciones creaba dos verdades sobre quién diseña.
+
+### Qué se retiró y por qué
+
+| Categoría | Qué | Razón |
+|---|---|---|
+| Rol fantasma | 5 docs `PRODUCT_DESIGN_EXPERT_*` | Especifican un agente que nunca existió; scope absorbido por `aiox-ux` |
+| Org-chart GRAVX | `ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md`, `DIVISION_AUTONOMY_CHARTER.md` | Origen del rol fantasma; superados por `agent-authority.md`, que sí es verificable |
+| Equipo humano | `HYBRID_DESIGN_STRATEGY_IMPLEMENTATION.md` | Presupuestos, contrataciones y rituales de un equipo que no existe |
+| Catálogos de herramientas | `TOOLS_ECOSYSTEM_*`, `GITHUB_RESOURCES_*`, `ALTERNATIVAS_A_FIGMA_*` | Catálogos externos (~34 KB) inyectados en cada mensaje; premisa Figma muerta |
+| Snapshots de sesión | 17 archivos de la raíz (fases, auditorías, resúmenes) | Narrativa de una sola sesión (2026-08-06/07), nunca documentación viva |
+
+### Corrección estructural detectada en la misma revisión
+
+Existían **dos** `ARCHITECTURE_MAP.md`. El de `.claude/rules/` era un duplicado
+obsoleto (le faltaba la sección 4️⃣.1 completa) y, por vivir en `.claude/rules/`,
+era **la copia que se inyectaba en cada sesión**. Se eliminó: la única fuente de
+verdad es este archivo (`docs/ARCHITECTURE_MAP.md`). Excepción justificada a la
+convención "nunca `git rm`" — no tenía contenido único (superset verificado por
+diff) y archivarlo habría creado una tercera copia.
+
+### Rescatado del material archivado (seguía siendo válido)
+
+**Política de licencias de assets externos** — vinculante, no informativa. Este repo
+publica `@dealpulsehub/design-system` en npm bajo licencia MIT; incorporar un asset
+copyleft es un problema legal real.
+
+| Permitido | Prohibido |
+|---|---|
+| MIT, Apache 2.0, OFL (SIL), CC0 / dominio público | **GPL** (obliga a liberar el código), **AGPL** (lo mismo, también en servidor), **CC BY-SA** (share-alike) |
+
+Aplica a iconos, fuentes, ilustraciones, animaciones, modelos 3D y cualquier
+dependencia que llegue al paquete publicado.
+
+**Gaps verificados de Penpot** (para `aiox-ux`): Penpot no tiene marketplace de
+plugins como Figma. Sí tienen camino verificado por código: imágenes
+(`penpot.uploadMediaUrl` + `fillImage`), colores (hex directo en `shape.fills`) y
+tipografía (Google Fonts, integración nativa). **No tienen flujo probado:** iconos
+(Phosphor/Heroicons), animaciones (Lottie/Rive — Penpot es estático) e ilustraciones
+(Storyset). No asumir que están resueltos.
+
+### Verificaciones que respaldan la decisión
+
+- `npm pack --dry-run`: 36 archivos, solo `README.md` + `CHANGELOG.md`. Archivar
+  documentación **no afecta al paquete publicado**.
+- Los hooks no dependen de nombres de rol: `guard-qa-gate-prepush.cjs` L82 compara
+  `state.verdict !== 'APRUEBA'` contra un JSON. Renombrar prosa no rompe enforcement.
+- `GRAVX` en `src/` (`bridge-agent.js`, `server-phase4.js`, `demo-phase4.js`) es
+  terminología interna de un módulo con tests reales. **No se tocó código.**
+
+### Ejecutada — Fase 2 de esta sesión
+
+Los 8 agentes AIOX conservaban alias de persona GRAVX en su prosa (`aiox-ux` = "CXO
+(Uma)", `aiox-pm` = "CCO", `aiox-analyst` = "CPS"). Era el último rastro de la capa
+narrativa y, siendo estrictos, caía bajo "solo agentes AIOX". Con confirmación
+explícita del usuario, se ejecutó:
+
+- 10 ediciones en 4 archivos (`aiox-pm.md`, `aiox-analyst.md`, `aiox-ux.md`,
+  `aiox-master.md`).
+- Removidos nombres de persona (Morgan, Alex, Uma) de títulos.
+- Removidos roles GRAVX (CCO, CPS, CXO) de descripciones, títulos y prosa interna.
+- Verificación: `grep -rnE "CPS|CCO|CXO|CAO" .claude/agents/` = 0 matches.
+- Tests: 59/59 passing (`npm test`).
+
+---
+
 ## ✅ Estado de coherencia (post-auditoría 2026-08-10)
 
 | Área | Antes | Después |
@@ -228,12 +310,16 @@ consulta; la media (~18 KB ≈ 4.5k tokens) sí es asumible por defecto.
 | Node version en CI | ❌ Node 18 (incompatible con Storybook 8) | ✅ Node 20, `engines.node` actualizado |
 | Este documento | ❌ No existía | ✅ Creado |
 | Acceso a los 58 expertos de Megabrain | ❌ Manual, abriendo el otro repo a mano | 🟡 Diseño aprobado con cambios (`scripts/megabrain-expert.js`) — pendiente de `@dev`, ver 4️⃣.1 |
+| `@product-design-expert` como rol | ❌ 5 specs (~131 KB) de un agente inexistente | ✅ Retirado — scope absorbido por `aiox-ux` (ver 5️⃣) |
+| `ARCHITECTURE_MAP.md` duplicado | ❌ 2 copias; la de `.claude/rules/` (obsoleta) era la auto-inyectada | ✅ Fuente única en `docs/` |
+| Capa narrativa GRAVX en docs | ❌ 29 archivos aspiracionales activos | ✅ Archivados en `docs/archive/`, con 2 rescates (licencias, gaps Penpot) |
+| Alias GRAVX en los 8 agentes | 🟡 CPS/CCO/CXO en la prosa | ✅ Removidos (10 ediciones en 4 archivos, ver 5️⃣) |
 
 ---
 
 ## 🔗 Documentos relacionados
 
 - `PENPOT_MCP_PRODUCTION_PROTOCOL.md` (global) — sistema 3
-- `ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md` — sistema 4
+- `.claude/rules/agent-authority.md` + `.claude/agents.yaml` — sistema 4 (gobernanza vigente)
 - `docs/MEGABRAIN_VS_DEALPULSEHUB.md` — relación entre los dos repos (gobernanza) — contexto de 4️⃣.1
 - `.ai/decision-log.md` — historial completo de decisiones y hallazgos de esta auditoría

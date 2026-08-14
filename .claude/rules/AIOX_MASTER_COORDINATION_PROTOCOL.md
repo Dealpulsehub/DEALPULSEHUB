@@ -18,7 +18,7 @@
 > `.claude/rules/agent-authority.md` sección "Flujo de Ruteo / Arbitraje",
 > que es la fuente actual y verificada de cómo se invoca de verdad
 > (`Agent` tool, `subagent_type: aiox-master`) y qué hace en la práctica.
-> Los "8 conflictos comunes y soluciones" (sección de abajo) también siguen
+> Los "3 conflictos comunes y soluciones" (sección de abajo) también siguen
 > siendo útiles como catálogo de patrones de arbitraje, independientemente
 > de que no haya standup diario.
 >
@@ -58,7 +58,7 @@ ACCIÓN:
 ├─ Si todo OK → NO interviene (deja trabajar)
 ├─ Si hay blocker → Arbitra inmediatamente
 ├─ Si timing se desvía → Escala recursos
-└─ Si conflicto irresoluible → Escalda a Director General
+└─ Si conflicto irresoluible → Escala al usuario
 ```
 
 ### **2. RESOLUCIÓN DE CONFLICTOS**
@@ -96,8 +96,7 @@ CLAVE: NO bloquea, arbitra ágil
 ANTES de Division Técnica recibe trabajo:
 
 Checklist:
-├─ ¿Mockups de @product-design-expert alineados con copy de CCO?
-├─ ¿Diseños de CXO consistentes con mockups?
+├─ ¿Mockups y diseños de CXO consistentes con el copy de CCO?
 ├─ ¿Videos de CAO mantienen brand voice?
 ├─ ¿Todos respetan Design Tokens?
 └─ ¿Accesibilidad WCAG en todos?
@@ -207,7 +206,7 @@ CLAVE: MVP rápido > Perfecto lento
 
 ```
 ESCENARIO:
-  @product-design-expert: "Mi idea innova, pero no usa colores spec"
+  CXO: "Mi idea innova, pero no usa colores spec"
   CCO: "Debe respetar brand"
   
 TIEMPO: ~20 minutos de arbitraje
@@ -217,7 +216,7 @@ SOLUCIÓN @aiox-master:
   
   Step 2: Propone: "Usa innovación como variant A/B test"
           └─ Variant 1: Spec (standard)
-          └─ Variant 2: Innovación (@product-design-expert)
+          └─ Variant 2: Innovación (CXO)
           └─ Test en vivo, medir ROI
   
   Step 3: Ambos aprueban
@@ -244,7 +243,7 @@ Division Estrategia (@pm Morgan):
   ├─ Blocker: Alguno? (Sí/No)
   └─ ETA: Briefing ready? (Date)
 
-Division Creativa (@product-design-expert, Uma, Dex):
+Division Creativa (Uma, Dex):
   ├─ Status: On track? (Sí/No)
   ├─ Blocker: Alguno? (Sí/No)
   └─ ETA: Assets ready? (Date)
@@ -271,7 +270,7 @@ NIVEL 1: @aiox-master arbitra
 ├─ Re-scoping menor
 └─ SLA: 20 min resolución
 
-NIVEL 2: Director General arbitra
+NIVEL 2: El usuario arbitra
 ├─ Conflictos irresoluibles en L1
 ├─ Timeline desvíos > 3 días
 ├─ Re-scoping mayor
@@ -298,8 +297,7 @@ NIVEL 3: Russell Brunson Framework
   └─ Briefing a Division Creativa
 
 □ Division Creativa COMPLETA
-  └─ @product-design-expert: Mockups LISTOS
-  └─ CXO: Diseños LISTOS
+  └─ CXO: Mockups + Diseños LISTOS
   └─ CAO: Videos LISTOS
   └─ Assets a Division Técnica
 
@@ -335,7 +333,7 @@ SI ALGO ✗ → @aiox-master identifica y arbitra fix
 ✅ Propone soluciones creativas
 ✅ Escala recursos si necesario
 ✅ Re-scope scope para cumplir timelines
-✅ Recomienda al Director General
+✅ Recomienda al usuario
 ✅ Monitorea todas las divisiones
 ✅ Habilita velocidad
 ```
@@ -368,7 +366,7 @@ SI ALGO ✗ → @aiox-master identifica y arbitra fix
 
 ## 🚀 QUICK REFERENCE: QUÉ HACER CUANDO...
 
-### **"Hay conflicto entre @product-design-expert y CXO"**
+### **"Hay conflicto entre CXO y CCO"**
 ```
 → @aiox-master: Habla con ambos (5 min)
 → Propone solución (5 min)
@@ -382,14 +380,14 @@ SI ALGO ✗ → @aiox-master identifica y arbitra fix
 → @aiox-master: ¿Dónde exactamente?
 → ¿Es realmente necesario o podemos re-scope?
 → Propone alternativa (paralelizar, MVP, etc)
-→ Escalda a Director General si es fundamental
+→ Escala al usuario si es fundamental
 → Encuentra solución en < 2 horas
 ```
 
-### **"Copy de CCO no alineado con mockup de @product-design-expert"**
+### **"Copy de CCO no alineado con mockup de CXO"**
 ```
 → @aiox-master: Identifica discrepancia
-→ Habla con CCO + @product-design-expert
+→ Habla con CCO + CXO
 → Propone versión intermedia
 → Ambos aprueban
 → Implementa sin bloqueo

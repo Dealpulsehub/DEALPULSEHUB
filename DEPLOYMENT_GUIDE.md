@@ -206,11 +206,7 @@ DealPulseHub/
 │
 ├── .env                            (Variables de entorno)
 ├── package.json                    (Dependencias)
-├── FASE_1_COMPLETADA.md           (Fundaciones)
-├── FASE_2_COMPLETADA.md           (Orquestación)
-├── FASE_3_COMPLETADA.md           (Observabilidad)
-├── FASE_4_COMPLETADA.md           (Seguridad)
-├── RESUMEN_EJECUTIVO_SISTEMA_COMPLETO.md
+├── docs/archive/                    (histórico de fases 1-4, ver docs/ARCHITECTURE_MAP.md)
 └── DEPLOYMENT_GUIDE.md            (Este archivo)
 ```
 
@@ -470,11 +466,8 @@ docker run -p 3000:3000 \
 ## 📞 SOPORTE Y DOCUMENTACIÓN
 
 ### Documentación Disponible
-- [FASE_1_COMPLETADA.md](FASE_1_COMPLETADA.md) - Fundaciones
-- [FASE_2_COMPLETADA.md](FASE_2_COMPLETADA.md) - Orquestación
-- [FASE_3_COMPLETADA.md](FASE_3_COMPLETADA.md) - Observabilidad
-- [FASE_4_COMPLETADA.md](FASE_4_COMPLETADA.md) - Seguridad
-- [RESUMEN_EJECUTIVO_SISTEMA_COMPLETO.md](RESUMEN_EJECUTIVO_SISTEMA_COMPLETO.md)
+- [docs/ARCHITECTURE_MAP.md](docs/ARCHITECTURE_MAP.md) — mapa vigente de los 4 sistemas
+- Histórico de las Fases 1-4 (snapshots de 2026-08-07): `docs/archive/`
 
 ### CLI Disponible
 ```bash

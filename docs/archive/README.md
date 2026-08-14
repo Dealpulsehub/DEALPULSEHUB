@@ -39,6 +39,43 @@ una razón distinta: es pseudocódigo Python que el propio texto admite que
 | `FASE_1_START_AHORA.md` | Guía paso a paso de setup de Penpot ya completada — el setup real ocurrió y quedó documentado en `PENPOT_MCP_PRODUCTION_PROTOCOL.md` (global). |
 | `ADS_CAROUSELS_NEURO_COMPLETE_SYSTEM.md` | Sistema de auditoría neuro de ads en pseudocódigo Python, nunca implementado. |
 
+### Segunda ola — retiro de `@product-design-expert` y la capa narrativa GRAVX (2026-08-14)
+
+Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle completo de esta decisión
+(`@architect`, aprobada por el usuario).
+
+| Archivo | Por qué se archivó |
+|---|---|
+| `PRODUCT_DESIGN_EXPERT_COMPLETE_SPECIFICATION.md` | Especifica un agente (`@product-design-expert`) que nunca se implementó — sin archivo en `.claude/agents/`, ausente de `.claude/agents.yaml`. Su scope completo ya lo cubre `aiox-ux` (ver `docs/ARCHITECTURE_MAP.md` § 5️⃣). |
+| `PRODUCT_DESIGN_EXPERT_EXPANDED_SCOPE.md` | Especifica un agente (`@product-design-expert`) que nunca se implementó — sin archivo en `.claude/agents/`, ausente de `.claude/agents.yaml`. Su scope completo ya lo cubre `aiox-ux` (ver `docs/ARCHITECTURE_MAP.md` § 5️⃣). |
+| `PRODUCT_DESIGN_EXPERT_INTEGRATED_SCOPE.md` | Especifica un agente (`@product-design-expert`) que nunca se implementó — sin archivo en `.claude/agents/`, ausente de `.claude/agents.yaml`. Su scope completo ya lo cubre `aiox-ux` (ver `docs/ARCHITECTURE_MAP.md` § 5️⃣). |
+| `PRODUCT_DESIGN_EXPERT_TEMPLATES_PROMPTS.md` | Especifica un agente (`@product-design-expert`) que nunca se implementó — sin archivo en `.claude/agents/`, ausente de `.claude/agents.yaml`. Su scope completo ya lo cubre `aiox-ux` (ver `docs/ARCHITECTURE_MAP.md` § 5️⃣). |
+| `PRODUCT_DESIGN_EXPERT_TOOLKIT.md` | Especifica un agente (`@product-design-expert`) que nunca se implementó — sin archivo en `.claude/agents/`, ausente de `.claude/agents.yaml`. Su scope completo ya lo cubre `aiox-ux` (ver `docs/ARCHITECTURE_MAP.md` § 5️⃣). |
+| `HYBRID_DESIGN_STRATEGY_IMPLEMENTATION.md` | Plan de contratación de un designer humano + junior para un rol (`@product-design-expert`) que nunca existió como agente. |
+| `ORGANIZATIONAL_STRUCTURE_DIVISIONAL.md` | Org-chart y reglas de autonomía de la capa narrativa GRAVX, origen de `@product-design-expert` como rol separado. Superado por `agent-authority.md`, verificable contra `.claude/agents.yaml`. |
+| `DIVISION_AUTONOMY_CHARTER.md` | Org-chart y reglas de autonomía de la capa narrativa GRAVX, origen de `@product-design-expert` como rol separado. Superado por `agent-authority.md`, verificable contra `.claude/agents.yaml`. |
+| `ALTERNATIVAS_A_FIGMA_FREE_LOW_COST.md` | Catálogo de herramientas dirigido al rol retirado; premisa Figma muerta (Penpot no tiene marketplace de plugins equivalente). Contenido con vigencia real (licencias, gaps de Penpot) rescatado a `docs/ARCHITECTURE_MAP.md` § 5️⃣ antes de archivar. |
+| `GITHUB_RESOURCES_AVAILABLE.md` | Catálogo de herramientas dirigido al rol retirado; premisa Figma muerta (Penpot no tiene marketplace de plugins equivalente). Contenido con vigencia real (licencias, gaps de Penpot) rescatado a `docs/ARCHITECTURE_MAP.md` § 5️⃣ antes de archivar. |
+| `TOOLS_ECOSYSTEM_PRODUCT_DESIGNER.md` | Catálogo de herramientas dirigido al rol retirado; premisa Figma muerta (Penpot no tiene marketplace de plugins equivalente). Contenido con vigencia real (licencias, gaps de Penpot) rescatado a `docs/ARCHITECTURE_MAP.md` § 5️⃣ antes de archivar. |
+| `IMPLEMENTATION_ROADMAP_SEQUENTIAL.md` | Su propia nota ya admitía estar mayormente superado por el pipeline Node real (`scripts/penpot-*.js`). |
+| `ANALISIS_INTEGRAL_ARQUITECTURA.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `CHECKLIST_IMPLEMENTACION_FASE_4.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `FASE_1_COMPLETADA.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `FASE_2_COMPLETADA.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `FASE_3_COMPLETADA.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `FASE_4_COMPLETADA.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `INDICE_COMPLETO_AUDITORIA.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `MODELO_DE_NEGOCIO_AGENCIA_PREMIUM.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `QUICK_START_FINAL.txt` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `REPORTE_FINAL_AUDITORIA.txt` | Además de ser snapshot de sesión, literalmente escribe "AUDITOR: @aiox-master (Director General)", conflando el agente real con el rol narrativo retirado. |
+| `RESUMEN_EJECUTIVO_AUDITORIA.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `RESUMEN_EJECUTIVO_SISTEMA_COMPLETO.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `ROADMAP_COMPLETO_A_D.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `SESION_COMPLETADA.txt` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `SISTEMA_ABC_LISTO.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `SISTEMA_COMPLETO_AUTOMATIZADO.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+| `SISTEMA_COMPLETO_ESTADO_FINAL.md` | Snapshot narrativo de una sola sesión (6-7 agosto 2026), nunca documentación viva. Ver `docs/ARCHITECTURE_MAP.md` § 5️⃣ para el detalle de la limpieza. |
+
 ## Si necesitas algo de aquí
 
 Estos archivos siguen siendo legibles y su historial de git se preservó

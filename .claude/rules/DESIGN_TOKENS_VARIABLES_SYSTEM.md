@@ -998,5 +998,5 @@ AFTER DELIVERY:
 **Status:** ✅ LIVE — Copy to Figma + project files NOW  
 **Usage:** Reference for EVERY mockup you create  
 **Update Frequency:** Review quarterly, update as needed  
-**Owner:** Design System (maintained by @product-design-expert + CXO)
+**Owner:** Design System (mantenido por `aiox-ux`)
 
